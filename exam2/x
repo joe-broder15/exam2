@@ -1,0 +1,68 @@
+//-------------TEST white-------------
+fin.open("white.txt");
+
+//Handle error
+if(fin.fail())
+{
+    cout << "Failed" << endl;
+    return 0;
+}
+
+//Create vectors to store runners
+vector<Runner> whiteVectTest;
+
+//search through file and create runners
+while(getline(fin, line))
+{
+    //Create runner for each line
+    //Temporary runner object and array to hold parsed line pieces
+    Runner tempRun;
+    vector<string> lineVect;
+
+    //Create int variables to serve as markers
+    int firstLetter= 0;
+    int lastLetter= 0;
+
+    //Parse the line into its parts
+    for(int i=0; i<line.length() + 1; i++)
+    {
+
+        if(line[i] != ' ' && line[i-1] == ' ')
+        {
+            firstLetter = i;
+        }
+
+        if(line[i] != ' ' &&  line[i+1] == ' ')
+        {
+            lastLetter = i + 1;
+            lineVect.push_back(line.substr(firstLetter, lastLetter));
+        }
+        //Handles last word in
+        if(i == line.length()) {
+            lastLetter = i;
+            lineVect.push_back(line.substr(firstLetter, lastLetter));
+        }
+    }
+
+    //Remove non alpha characters from second item (last name)
+    lineVect[1].erase(remove_if(lineVect[1].begin(), lineVect[1].end(), [](char c) { return !isalpha(c); } ), lineVect[1].end());
+
+    //Modify runner object
+    tempRun.set_firstname(lineVect[0]);
+    tempRun.set_lastname(lineVect[1]);
+
+    whiteVectTest.push_back(tempRun);
+}
+
+//Compare items to file content
+for(int i = 0; i < whiteVect.size(); i++)
+{
+    if(whiteVect[i].get_lastname() != whiteVectTest[i].get_lastname() && whiteVectTest[i].get_firstname() != whiteVect[i].get_firstname())
+    {
+        cout << "ERROR white" << endl;
+        return 0;
+    }
+}
+cout << "passed white" << endl;
+
+fin.close();
