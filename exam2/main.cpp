@@ -74,17 +74,15 @@ int main() {
         runVect.push_back(tempRun);
     }
     
-    //sort vector
-    bool swap = true;
-    while(swap){
-        swap = false;
-        for (size_t i = 0; i <= runVect.size(); i++) {
+    //sort vector with bubble sort
+    for (int i = 0; i <= runVect.size(); i++) {
+       
+        for (int j = 0; i <= runVect.size() - i; i++) {
             
-            if (runVect[i].get_pace()>runVect[i+1].get_pace()){
-                Runner temp = runVect[i+1];
-                runVect[i+1] = runVect[i];
-                runVect[i] = temp;
-                swap = true;
+            if (runVect[j].get_pace()>runVect[j+1].get_pace()){
+                Runner temp = runVect[j+1];
+                runVect[j+1] = runVect[j];
+                runVect[j] = temp;
             }
         }
     }
